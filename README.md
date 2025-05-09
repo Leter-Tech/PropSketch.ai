@@ -44,11 +44,11 @@ This is property design reimagined — faster, smarter, and neater.
 
 ### **Cloud Storage**  
 
-> **Save and access your designs from anywhere with secure cloud storage.**
+> **Save and access your property designs easily from anywhere with secure, encrypted cloud storage.**
 
 ### **Easy Sharing**  
 
-> **Share your designs with clients and colleagues with simple export options.**
+> **Share your designs with clients and colleagues with simple cloud links and export options.**
 
 ---
 
@@ -102,7 +102,7 @@ graph TD
 
 ## 📋 **Impact & Benefits**
 
-- **Design Faster & Smarter:** With AI-powered sketch to design conversion and 3D walkthrough videos, you can turn ideas into presentations in minutes.
+- **Design Faster & Smarter:** With AI-powered sketch to design conversion and 3D walkthrough videos, you can turn ideas into presentations in seconds.
 
 - **Eliminate Guesswork:** Material lists and visual outputs help you estimate requirements accurately and make informed decisions before development.
 
