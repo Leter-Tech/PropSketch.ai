@@ -48,7 +48,7 @@ This is property design reimagined — faster, smarter, and neater.
 
 ### **Easy Sharing**  
 
-> **Share your designs with clients and colleagues with simple cloud links and export options.**
+> **Share your designs with clients and your team for feedback and collaboration via simple cloud links and export options.**
 
 ---
 
