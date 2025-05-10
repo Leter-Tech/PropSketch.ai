@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropSketch.ai - Transform Your Sketches into Realistic Property Designs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #4e6bff;
+            --secondary: #33d9b2;
+            --dark: #333;
+            --light: #f7f9fc;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        header {
+            padding: 1.5rem 5%;
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background-color: #4e6bff;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            color: var(--light);
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #c2c2c2;
+        }
+        
+        .hero {
+            padding: 10rem 5% 5rem;
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            gap: 3rem;
+        }
+        
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .hero-image iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .highlight {
+            color: var(--primary);
+        }
+        
+        p.lead {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            margin-right: 1rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 107, 255, 0.3);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background-color: transparent;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 107, 255, 0.4);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        
+        #features {
+            padding: 5rem 5%;
+            text-align: center;
+            padding-top: 0px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #666;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(78, 107, 255, 0.5);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background-color: rgba(78, 107, 255, 0.1);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        
+        #demo {
+            padding: 5rem 5%;
+            background-color: #f0f4ff;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 3rem auto 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+        }
+        
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: modalopen 0.4s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-60px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.8rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--light);
+        }
+        
+        .google-btn:hover {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            border-color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div style="cursor: pointer;" onclick="window.location = 'index.html'" class="logo"><i style="font-size: 30px; margin-right: 2px;" class="fas fa-building"></i> PropSketch.ai</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="Pitchdeck.pdf" target="_blank">Pitchdeck</a></li>
+                <li><a href="#" onclick="alert('Contact option will be added soon.')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Transform Your <span class="highlight">Sketches</span> into Real Property Designs</h1>
+                <p class="lead">PropSketch.ai helps architects, interior designers, and property developers turn rough property sketches into beautiful, realistic property designs with AI-powered technology.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" id="getStartedBtn"><i class="fas fa-sign-in-alt" style="margin-right: 5px;"></i> Get Started</button>
+                    <button class="btn btn-outline" id="pitchDeckBtn"><i class="fas fa-file-alt" style="margin-right: 5px;"></i> Read Pitchdeck</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <iframe src="https://www.youtube.com/embed/JC5ngar8N9w" title="PropSketch.ai Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+        
+        <section id="features">
+            <div class="section-title">
+                <h2>Powerful <span class="highlight">Features</span></h2>
+                <p>PropSketch.ai offers a comprehensive set of tools to transform your sketches into detailed designs</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-pencil-ruler"></i>
+                    </div>
+                    <h3>Sketch to Design</h3>
+                    <p>Upload your hand-drawn sketches and transform them into realistic interior or exterior colored designs with AI</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>3D Walkthrough</h3>
+                    <p>Generate stunning 3D video walkthroughs of your design to visualize the final outcome</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <h3>Material Lists</h3>
+                    <p>Get comprehensive lists of materials needed for your design, complete with estimated quantities</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3>Customization</h3>
+                    <p>Edit and customize your design with text prompts, annotations, labeling, and direct modifications</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Storage</h3>
+                    <p>Save and access your property designs easily from anywhere with secure, encrypted cloud storage</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-share-nodes"></i>
+                    </div>
+                    <h3>Easy Sharing</h3>
+                    <p>Share your designs with clients and your team for feedback and collaboration via simple cloud links and export options</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 style="margin-bottom: 10px;">Sign in to <span style="color: var(--primary);">PropSketch.ai</span></h2>
+            <p>Continue with your Google account to start creating amazing designs.</p>
+            <div class="auth-buttons">
+                <button id="googleSignIn" class="google-btn">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="cursor: pointer;" onclick="window.location = 'index.html'">&copy; PropSketch.ai | All rights reserved</p>
+    </footer>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <script>
+       
+        const firebaseConfig = {
+            REMOVED
+        };
+        
+       
+        firebase.initializeApp(firebaseConfig);
+        
+       
+        function formatDateToGMT530(date) {
+            const options = {
+                timeZone: 'Asia/Kolkata',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            return date.toLocaleString('en-IN', options).replace(',', '');
+        }
+        
+       
+        document.addEventListener('click', function(event) {
+            const element = event.target;
+            var email = '';
+            if (firebase.auth().currentUser) {
+                email = firebase.auth().currentUser.email;
+            } else {
+                email = 'Not Signed In';
+            }
+            
+            const clickData = {
+                tagName: element.tagName,
+                id: element.id || null,
+                classList: Array.from(element.classList).join(' ') || null,
+                textContent: element.textContent.trim() || null,
+                timestamp: formatDateToGMT530(new Date()),
+                userInfo: email,
+                page: document.title
+            };
+            firebase.database().ref('clicks').push(clickData);
+        });
+        
+       
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const pitchDeckBtn = document.getElementById('pitchDeckBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const googleSignInBtn = document.getElementById('googleSignIn');
+        
+       
+        getStartedBtn.addEventListener('click', function() {
+           
+            if (firebase.auth().currentUser) {
+                window.location.href = 'app.html';
+            } else {
+                loginModal.style.display = 'block';
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+        
+        pitchDeckBtn.addEventListener('click', function() {
+            window.open('Pitchdeck.pdf', '_blank');
+        });
+        
+        closeBtn.addEventListener('click', function() {
+            loginModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(event) {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+        
+       
+        googleSignInBtn.addEventListener('click', function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth()
+                .signInWithPopup(provider)
+                .then((result) => {
+                   
+                    console.log('User signed in:', result.user.displayName);
+                   
+                    window.location.href = 'app.html';
+                })
+                .catch((error) => {
+                    console.error('Error signing in:', error);
+                });
+        });
+        
+       
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+               
+                console.log('User is already signed in:', user.displayName);
+               
+                getStartedBtn.innerHTML = '<i class="fas fa-rocket" style="margin-right: 5px;"></i> Go to Dashboard';
+            }
+        });
+    </script>
+</body>
+</html> 

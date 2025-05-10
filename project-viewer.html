@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropSketch.ai - Project Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #4e6bff;
+            --secondary: #33d9b2;
+            --dark: #333;
+            --light: #f7f9fc;
+            --border: #c3c6cc;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4e6bff;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .fk:focus {
+            box-shadow: 0 0 4.5px var(--primary);
+            outline: none;
+        }
+
+        .gfs {
+            color: var(--light) !important;
+        }
+
+        .gfs:hover {
+            color: #c2c2c2 !important;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .user-menu .fa-chevron-down {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 20px;
+            min-width: 180px;
+            display: none;
+            flex-direction: column;
+            z-index: 101;
+        }
+        
+        .dropdown-menu.show {
+            display: flex;
+        }
+        
+        .dropdown-menu a {
+            padding: 1rem;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: var(--light);
+            border-radius: 20px;
+        }
+        
+        
+        .project-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .project-title h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-title p {
+            color: #666;
+        }
+        
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 107, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-danger {
+            background-color: #ff4d4d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+        
+        .btn-primary:hover,
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(78, 107, 255, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light);
+        }
+        
+        
+        .project-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .image-container {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            padding: 1rem;
+        }
+        
+        .image-container h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(34px);
+        }
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        .toggle-label {
+            margin-left: 0px;
+            vertical-align: middle;
+            font-weight: 500;
+        }
+        
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        
+        .materials-category {
+            margin-bottom: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .materials-category h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            cursor: pointer;
+        }
+        
+        .materials-table th,
+        .materials-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .materials-table th {
+            font-weight: 600;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        .materials-table tr:hover {
+            background-color: var(--light);
+        }
+        
+        
+        .customize-form {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            resize: vertical;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(78, 107, 255, 0.2);
+        }
+        
+        
+        .video-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 54.2%; 
+            height: 0;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .video-wrapper video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        
+        .annotation-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        
+        .toggle-annotation {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .toggle-annotation input {
+            margin: 0;
+        }
+        
+        .annotation-active .image-wrapper {
+            cursor: crosshair;
+        }
+        
+        .annotation-point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 0 0 2px white;
+        }
+        
+        .annotation-tooltip {
+            position: absolute;
+            background-color: white;
+            border-radius: 5px;
+            padding: 0.5rem;
+            box-shadow: var(--shadow);
+            max-width: 200px;
+            z-index: 20;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .annotation-form {
+            position: absolute;
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            z-index: 30;
+            width: 250px;
+        }
+        
+        .annotation-form input, 
+        .annotation-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+        }
+        
+        .annotation-form-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            animation: modalopen 0.4s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-60px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        
+        .profile-info {
+            margin-top: 1.5rem;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-pic-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .settings-section h3 {
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            color: var(--dark);
+        }
+        
+        .settings-section:last-child {
+            border-bottom: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 26px;
+            margin-right: 10px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(34px);
+        }
+        
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .delete-project {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            background-color: #fd6767;
+            color: white;
+        }
+
+        .delete-project:hover {
+            transform: translateY(-3px);
+            background-color: #fc3f3f;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        .toggle-label {
+            vertical-align: middle;
+            font-weight: 500;
+        }
+        
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            margin: 15px 0;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+        
+        
+        .video-info {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .video-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .video-info ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .video-info li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <a href="index.html" class="logo"><i style="font-size: 25px; margin-right: 2px;" class="fas fa-building"></i> PropSketch.ai</a>
+        <div class="nav-links">
+            <a class="gfs" href="app.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <div class="user-menu" id="userMenu">
+                <img src="https://ui-avatars.com/api/?name=User&background=4e6bff&color=fff" alt="Profile" class="profile-pic" id="profilePic">
+                <span style="color: var(--light);" id="userName">User</span>
+                <i style="color: var(--light);" class="fas fa-chevron-down"></i>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#" id="profileBtn"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#" id="settingsBtn"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="project-container">
+        <div class="project-header">
+            <div class="project-title">
+                <h1 id="projectName">Loading...</h1>
+                <p>Last updated: <span id="projectDate">2023-08-15</span></p>
+            </div>
+            <div class="project-actions">
+                <button class="btn btn-secondary" id="renameBtn"><i style="margin-right: 5px;" class="fas fa-edit"></i> Rename</button>
+                <button class="btn btn-secondary" id="downloadBtn"><i style="margin-right: 5px;" class="fas fa-download"></i> Download</button>
+                <button class="btn btn-primary" id="shareBtn"><i style="margin-right: 5px;" class="fas fa-users"></i> Invite</button>
+                <button class="btn btn-danger" id="deleteBtn"><i style="margin-right: 5px;" class="fas fa-trash"></i> Delete</button>
+            </div>
+        </div>
+
+        
+        <div class="project-content">
+            <div class="image-container">
+                <div style="display: flex; justify-content: center; color: var(--primary);"><h3><i class="fas fa-pencil-ruler"></i> Original Sketch</h3></div>
+                <div class="image-wrapper">
+                    <img src="" alt="Original Sketch" class="project-image" id="originalImage">
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <h3 style="display: flex; justify-content: center; color: var(--primary);"><i class="fas fa-wand-magic-sparkles"></i> Transformed Design</h3>
+                <div class="image-wrapper" id="transformedImageWrapper">
+                    <img src="" alt="Transformed Design" class="project-image" id="transformedImage">
+                    
+                </div>
+                <div class="annotation-controls">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggleAnnotation">
+                        <span class="slider round"></span>
+                        
+                    </label>
+                    <span class="toggle-label">Enable Annotations</span>
+                    <button class="btn btn-secondary" id="clearAnnotationsBtn" style="display: none; font-size: 12px;">Clear Annotations</button>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="additional-features">
+            <div class="tabs">
+                <div class="tab active" data-tab="materials">Materials List</div>
+                <div class="tab" data-tab="3d-view">3D Walkthrough</div>
+                <div class="tab" data-tab="customize">Customize Design</div>
+            </div>
+            
+            <div class="tab-content active" id="materials-tab">
+                <h3>Materials List</h3>
+                <p style="margin-top: 5px;">Click the "Generate Materials List" button to analyze your design and get a detailed list of required materials.</p>
+                <button style="margin-top: 15px;" class="btn btn-primary" id="generateMaterialsBtn"><i style="margin-right: 5px;" class="fa-solid fa-wand-magic-sparkles"></i> Generate Materials List</button>
+                <div style="margin-top: 20px;" id="materialsContent"></div>
+            </div>
+            
+            <div class="tab-content" id="3d-view-tab">
+                <h3>3D Walkthrough</h3>
+                <p style="margin-top: 5px;">Generate a 3D video walkthrough of your design to visualize the final outcome.</p>
+                <button style="margin-top: 15px;" class="btn btn-primary" id="generate3DBtn"><i style="margin-right: 5px;" class="fa-solid fa-wand-magic-sparkles"></i> Generate 3D Walkthrough</button>
+                
+                <div style="margin-top: 20px; display: none;" id="video3DContainer" style="display: none;" class="video-container">
+                    <div class="video-wrapper">
+                        <video id="video3D" controls>
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <p style="margin-top: 23px;"><strong>Note:</strong> Walkthrough generation has been disabled due to API costs. Watch the demo video to view functionality.</p>
+                    <div class="video-controls">
+                        <button class="btn btn-secondary" id="downloadVideoBtn"><i class="fas fa-download"></i> Download Video</button>
+                    </div>
+                </div>
+                
+                <div id="video3DSpinner" style="display: none;">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <span>Processing 3D visualization: <span id="progressPercent">0%</span></span>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="customize-tab">
+                <h3 style="margin-bottom: 15px;">Customize Your Design</h3>
+                <div class="customize-form">
+                    <div class="form-group">
+                        <label for="customPrompt">Enter customization instructions:</label>
+                        <textarea id="customPrompt" rows="4" placeholder="Example: Change the wall color to light blue, add more windows on the left side, make the roof taller, etc."></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="applyCustomizationBtn"><i style="margin-right: 5px;" class="fa-solid fa-wand-magic-sparkles"></i> Apply Changes</button>
+                </div>
+                <div id="customizationSpinner" style="display: none;">
+                    <div class="spinner"></div> 
+                    <span>Applying customization, please wait...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="annotationForm" class="annotation-form" style="display: none;">
+        <h4>Add Annotation</h4>
+        <input type="text" id="annotationLabel" placeholder="Label (e.g., Wall, Window)">
+        <textarea id="annotationDescription" rows="3" placeholder="Description or modification instructions"></textarea>
+        <div class="annotation-form-buttons">
+            <button class="btn btn-secondary" id="cancelAnnotationBtn">Cancel</button>
+            <button class="btn btn-primary" id="saveAnnotationBtn">Save</button>
+        </div>
+    </div>
+
+    
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeProfileModal">&times;</span>
+            <h2>User Profile</h2>
+            <div class="profile-info">
+                <div class="profile-header">
+                    <img src="" alt="Profile" class="profile-pic-large" id="profilePicLarge">
+                    <div>
+                        <h3 id="profileName">User Name</h3>
+                        <p id="profileEmail">user@example.com</p>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="projectCount">0</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="memberSince">2023</span>
+                        <span class="stat-label">Member Since</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeSettingsModal">&times;</span>
+            <h2>Settings</h2>
+            <div class="settings-section">
+                <h3>Appearance</h3>
+                <div class="form-group">
+                    <label for="themeSelect">Theme</label>
+                    <select style="margin-top: 10px !important;" id="themeSelect" class="form-control">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark (Coming Soon)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h3>Notifications</h3>
+                <div style="width: 100%; display: flex;" class="form-group">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="emailNotifications" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">Email Notifications</span>
+                </div>
+                <div style="width: 100%; display: flex;" class="form-group">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="emailNotifications" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">Push Notifications</span>
+                </div>
+            </div>
+            <div style="margin-bottom: 0px;" class="settings-section">
+                <h3>Account</h3>
+                <button onclick="alert('Data export request submitted. You will receive an email soon.')" style="border: none;" class="btn btn-primary" id="exportDataBtn"><i style="margin-right: 5px;" class="fa-solid fa-file-download"></i> Export My Data</button>
+                <button onclick="alert('Account termination request submitted. Your account will be deleted in 7 days. Please check your email.')" style="border: none; margin-left: 5px;" class="btn delete-project" id="deleteDataBtn"><i style="margin-right: 5px;" class="fa-solid fa-trash"></i> Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="renameModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeRenameModal">&times;</span>
+            <h2 style="margin-bottom: 15px;">Rename Project</h2>
+            <div class="form-group">
+                <label style="margin-bottom: 10px;" for="newProjectName">New Project Name</label>
+                <input style="border: solid 0.5px var(--border)" type="text" id="newProjectName" class="form-control fk">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancelRenameBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveRenameBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeShareModal">&times;</span>
+            <h2 style="margin-bottom: 15px;">Share Project</h2>
+            <p style="margin-bottom: 15px; color: #666;">This link will allow others to edit the design. If you just want to show the design, use the download button.</p>
+            
+            <div class="form-group" style="display: flex; align-items: center;">
+                <input style="border: solid 0.5px var(--border); flex-grow: 1; margin-right: 10px;" type="text" id="projectLink" class="form-control fk" readonly>
+                <button style="color: var(--primary);" class="btn btn-secondary" id="copyLinkBtn"><i class="fas fa-copy"></i></button>
+            </div>
+            
+            <div style="margin-top: 20px; display: flex; align-items: center;">
+                <label class="toggle-switch">
+                    <input type="checkbox" checked id="shareToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Share access enabled</span>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <script>
+       
+        const firebaseConfig = {
+            REMOVED
+        };
+        
+       
+        firebase.initializeApp(firebaseConfig);
+        
+       
+        const GEMINI_API_KEY = 'REMOVED';
+        
+       
+        function formatDateToGMT530(date) {
+            const options = {
+                timeZone: 'Asia/Kolkata',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            return date.toLocaleString('en-IN', options).replace(',', '');
+        }
+        
+       
+        document.addEventListener('click', function(event) {
+            const element = event.target;
+            var email = '';
+            if (firebase.auth().currentUser) {
+                email = firebase.auth().currentUser.email;
+            } else {
+                email = 'Not Signed In';
+            }
+            
+            const clickData = {
+                tagName: element.tagName,
+                id: element.id || null,
+                classList: Array.from(element.classList).join(' ') || null,
+                textContent: element.textContent.trim() || null,
+                timestamp: formatDateToGMT530(new Date()),
+                userInfo: email,
+                page: document.title
+            };
+            firebase.database().ref('clicks').push(clickData);
+        });
+        
+       
+        const userMenu = document.getElementById('userMenu');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const projectName = document.getElementById('projectName');
+        const projectDate = document.getElementById('projectDate');
+        const originalImage = document.getElementById('originalImage');
+        const transformedImage = document.getElementById('transformedImage');
+        const transformedImageWrapper = document.getElementById('transformedImageWrapper');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const renameBtn = document.getElementById('renameBtn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const customizeTab = document.getElementById('customize-tab');
+        const materialsTab = document.getElementById('materials-tab');
+        const viewTab = document.getElementById('3d-view-tab');
+        const generateMaterialsBtn = document.getElementById('generateMaterialsBtn');
+        const materialsContent = document.getElementById('materialsContent');
+        const generate3DBtn = document.getElementById('generate3DBtn');
+        const video3DContainer = document.getElementById('video3DContainer');
+        const video3D = document.getElementById('video3D');
+        const video3DSpinner = document.getElementById('video3DSpinner');
+        const downloadVideoBtn = document.getElementById('downloadVideoBtn');
+        const toggleAnnotation = document.getElementById('toggleAnnotation');
+        const clearAnnotationsBtn = document.getElementById('clearAnnotationsBtn');
+        const annotationForm = document.getElementById('annotationForm');
+        const annotationLabel = document.getElementById('annotationLabel');
+        const annotationDescription = document.getElementById('annotationDescription');
+        const saveAnnotationBtn = document.getElementById('saveAnnotationBtn');
+        const cancelAnnotationBtn = document.getElementById('cancelAnnotationBtn');
+        
+       
+        const profileBtn = document.getElementById('profileBtn');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const profileModal = document.getElementById('profileModal');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeProfileModal = document.getElementById('closeProfileModal');
+        const closeSettingsModal = document.getElementById('closeSettingsModal');
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+        const profilePicLarge = document.getElementById('profilePicLarge');
+        const projectCount = document.getElementById('projectCount');
+        const memberSince = document.getElementById('memberSince');
+        
+       
+        const renameModal = document.getElementById('renameModal');
+        const closeRenameModal = document.getElementById('closeRenameModal');
+        const newProjectName = document.getElementById('newProjectName');
+        const saveRenameBtn = document.getElementById('saveRenameBtn');
+        const cancelRenameBtn = document.getElementById('cancelRenameBtn');
+        
+       
+        let currentProject = null;
+        let currentAnnotations = [];
+        let activeAnnotationPoint = null;
+        let tempAnnotationPosition = null;
+        
+       
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+        
+       
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+               
+                console.log('User is signed in:', user.displayName);
+               
+                document.getElementById('userName').textContent = user.displayName;
+                if (user.photoURL) {
+                    document.getElementById('profilePic').src = user.photoURL;
+                } else {
+                   
+                    const initials = user.displayName ? user.displayName.charAt(0) : 'U';
+                    document.getElementById('profilePic').src = `https://ui-avatars.com/api/?name=${initials}&background=4e6bff&color=fff`;
+                }
+                
+               
+                if (projectId) {
+                    loadProjectData(projectId);
+                } else {
+                   
+                    window.location.href = 'app.html';
+                }
+            } else {
+               
+                window.location.href = 'index.html';
+            }
+        });
+        
+       
+        userMenu.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('show');
+        });
+        
+       
+        window.addEventListener('click', function(event) {
+            if (!userMenu.contains(event.target) && dropdownMenu.classList.contains('show')) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+        
+       
+        logoutBtn.addEventListener('click', function() {
+            firebase.auth().signOut().then(() => {
+               
+                window.location.href = 'index.html';
+            }).catch((error) => {
+               
+                console.error('Error signing out:', error);
+            });
+        });
+       
+        function loadProjectData(projectId) {
+            firebase.database().ref(`projects/${projectId}`).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const project = snapshot.val();
+                        currentProject = project;
+                        
+                       
+                        projectName.textContent = project.name;
+                        
+                       
+                        const date = new Date(project.timestamp);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                        });
+                        projectDate.textContent = formattedDate;
+                        
+                       
+                        originalImage.src = `data:image/jpeg;base64,${project.originalImage}`;
+                        
+                        if (project.transformedImage) {
+                            transformedImage.src = `data:image/jpeg;base64,${project.transformedImage}`;
+                            
+                           
+                            if (project.annotations) {
+                                currentAnnotations = project.annotations;
+                                if (toggleAnnotation.checked) {
+                                    loadAnnotations();
+                                }
+                            }
+                            
+                           
+                            if (project.materials) {
+                                displayMaterialsList(project.materials);
+                            }
+                            
+                           
+                            document.querySelectorAll('.tab').forEach(tab => {
+                                tab.style.pointerEvents = 'auto';
+                                tab.style.opacity = '1';
+                            });
+                        } else {
+                            transformedImage.src = 'https://via.placeholder.com/400x300?text=Processing...';
+                            
+                           
+                            document.querySelectorAll('.tab:not(:first-child)').forEach(tab => {
+                                tab.style.pointerEvents = 'none';
+                                tab.style.opacity = '0.5';
+                            });
+                        }
+                    } else {
+                       
+                        alert('Project not found');
+                        window.location.href = 'app.html';
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading project:', error);
+                    alert('Error loading project');
+                });
+        }
+        
+       
+        downloadBtn.addEventListener('click', function() {
+            if (currentProject && currentProject.transformedImage) {
+                const link = document.createElement('a');
+                link.href = `data:image/jpeg;base64,${currentProject.transformedImage}`;
+                link.download = `${currentProject.name}_PropSketchAI_Transformed.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+        
+       
+        deleteBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete this project?')) {
+                firebase.database().ref(`projects/${projectId}`).remove()
+                    .then(() => {
+                        alert('Project deleted successfully');
+                        window.location.href = 'app.html';
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting project:', error);
+                        alert('Failed to delete project');
+                    });
+            }
+        });
+        
+       
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                this.classList.add('active');
+                const tabName = this.getAttribute('data-tab');
+                document.getElementById(`${tabName}-tab`).classList.add('active');
+            });
+        });
+        
+       
+        generateMaterialsBtn.addEventListener('click', function() {
+            if (currentProject && currentProject.transformedImage) {
+                generateMaterials();
+            } else {
+                alert('Transformed image is not available yet');
+            }
+        });
+        
+       
+        function generateMaterials() {
+           
+            materialsContent.innerHTML = '<div class="spinner"></div><span>Generating materials list, please wait...</span>';
+            generateMaterialsBtn.disabled = true;
+            
+           
+            const materialPrompt = 
+                "Analyze this architectural design image and provide a detailed list of materials needed for construction or interior design. " +
+                "Format the response as a JSON object with categories like 'structural', 'flooring', 'walls', 'fixtures', 'furnitures' etc. " +
+                "Each category should contain an array of objects with 'material' (name of material), 'quantity' (estimated quantity with unit), " +
+                "and 'purpose' (what it's used for). Make reasonable estimates based on what's visible in the image.";
+            
+            fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [
+                            { text: materialPrompt },
+                            {
+                                inline_data: {
+                                    mime_type: "image/jpeg",
+                                    data: currentProject.transformedImage
+                                }
+                            }
+                        ]
+                    }]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Materials Generation Response:', data);
+                
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+                
+               
+                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
+                    throw new Error('Invalid response format from Gemini API');
+                }
+                
+               
+                const textParts = data.candidates[0].content.parts.filter(part => part.text);
+                if (textParts.length === 0) {
+                    throw new Error('No text content in the response');
+                }
+                
+                const generatedText = textParts[0].text;
+                
+               
+                try {
+                   
+                    const jsonMatch = generatedText.match(/```json\n([\s\S]*?)\n```/) || 
+                                     generatedText.match(/```\n([\s\S]*?)\n```/) || 
+                                     [null, generatedText];
+                    
+                    const jsonContent = jsonMatch[1];
+                    
+                    console.log('Extracted JSON content:', jsonContent);
+                    
+                    let materialsData;
+                    try {
+                        materialsData = JSON.parse(jsonContent.trim());
+                    } catch (jsonError) {
+                        console.error('JSON parse error:', jsonError);
+                       
+                        const cleanedContent = jsonContent
+                            .replace(/\n/g, '')
+                            .replace(/,\s*}/g, '}')
+                            .replace(/,\s*]/g, ']');
+                        materialsData = JSON.parse(cleanedContent.trim());
+                    }
+                    
+                   
+                    if (typeof materialsData !== 'object' || materialsData === null) {
+                        throw new Error('Invalid materials data format');
+                    }
+                    
+                   
+                    firebase.database().ref(`projects/${projectId}`).update({
+                        materials: materialsData
+                    });
+                    
+                   
+                    displayMaterialsList(materialsData);
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    materialsContent.innerHTML = `
+                        <p>Error processing the materials list. Please try again.</p>
+                        <p>Details: ${e.message}</p>
+                    `;
+                    generateMaterialsBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error generating materials list:', error);
+                materialsContent.innerHTML = `
+                    <p>Error generating materials list. Please try again.</p>
+                    <p>Details: ${error.message}</p>
+                `;
+                generateMaterialsBtn.disabled = false;
+            });
+        }
+        
+       
+        function displayMaterialsList(materialsData) {
+            let html = '';
+            
+           
+            for (const category in materialsData) {
+                html += `
+                    <div class="materials-category">
+                        <h4>${category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                        <table class="materials-table">
+                            <thead>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Quantity</th>
+                                    <th>Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                materialsData[category].forEach(item => {
+                    html += `
+                        <tr>
+                            <td>${item.material}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.purpose}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            materialsContent.innerHTML = html;
+            generateMaterialsBtn.disabled = false;
+        }
+        
+       
+        function generate3DView() {
+            video3DSpinner.style.display = 'block';
+            generate3DBtn.disabled = true;
+            
+           
+            const VEO_API_KEY = 'veo_api_key_demo_123';
+            const VEO_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/veo-2.0-generate-001:predictLongRunning?key=${VEO_API_KEY}';
+            
+           
+            const veoData = {
+                image: currentProject.transformedImage,
+                quality: 'high',
+                duration: 30,
+                camera_mode: 'cinematic',
+                render_options: {
+                    lighting: 'natural',
+                    time_of_day: 'day'
+                }
+            };
+            
+           
+            console.log('3D Video Generation Request to Veo API:', {
+                endpoint: VEO_API_ENDPOINT,
+                data: {
+                    ...veoData,
+                    image: veoData.image.substring(0, 20) + '... (truncated)'
+                }
+            });
+            
+           
+           
+            
+            setTimeout(() => {
+               
+                video3DSpinner.innerHTML = `
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <span>Processing 3D visualization: <span id="progressPercent">0%</span></span>
+                `;
+                
+               
+                let progress = 0;
+                const progressBar = document.getElementById('progressBar');
+                const progressPercent = document.getElementById('progressPercent');
+                
+                const progressInterval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 5) + 1;
+                    progressBar.style.width = `${progress}%`;
+                    progressPercent.textContent = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        
+                        progressBar.style.width = '0%'
+                        progressPercent.textContent = '0%'
+
+                        const mockResponse = {
+                            status: 'complete',
+                            video_url: 'demo.mp4',
+                            thumbnail_url: '404.html'
+                        };
+                        
+                        
+                        video3D.src = mockResponse.video_url;
+                        video3DContainer.style.display = 'block';
+                        video3DSpinner.style.display = 'none';
+                        generate3DBtn.disabled = false;
+                        generate3DBtn.innerHTML = '<i style="margin-right: 5px;" class="fa-solid fa-wand-magic-sparkles"></i> Regenerate 3D Walkthrough';
+                        
+                        
+                        downloadVideoBtn.addEventListener('click', function() {
+                            const tempLink = document.createElement('a');
+                            tempLink.href = mockResponse.video_url;
+                            tempLink.download = `${currentProject.name}_3d_walkthrough.mp4`;
+                            document.body.appendChild(tempLink);
+                            tempLink.click();
+                            document.body.removeChild(tempLink);
+                        });
+                    }
+                }, 1000);
+            }, 2000);
+        }
+        
+       
+        const customPrompt = document.getElementById('customPrompt');
+        const applyCustomizationBtn = document.getElementById('applyCustomizationBtn');
+        const customizationSpinner = document.getElementById('customizationSpinner');
+        
+        applyCustomizationBtn.addEventListener('click', function() {
+            const promptText = customPrompt.value.trim();
+            if (promptText) {
+                applyCustomization(promptText);
+            } else {
+                alert('Please enter customization instructions');
+            }
+        });
+        
+       
+        toggleAnnotation.addEventListener('change', function() {
+            if (this.checked) {
+                enableAnnotationMode();
+            } else {
+                disableAnnotationMode();
+            }
+        });
+        
+        function enableAnnotationMode() {
+            document.getElementById("transformedImageWrapper").style.cursor = 'pointer';
+            transformedImageWrapper.classList.add('annotation-active');
+            clearAnnotationsBtn.style.display = 'block';
+            loadAnnotations();
+        }
+        
+        function disableAnnotationMode() {
+            document.getElementById("transformedImageWrapper").style.cursor = 'default';
+            transformedImageWrapper.classList.remove('annotation-active');
+            clearAnnotationsBtn.style.display = 'none';
+            hideAnnotationForm();
+        }
+        
+        transformedImageWrapper.addEventListener('click', function(e) {
+            if (!toggleAnnotation.checked) return;
+            
+           
+            const rect = transformedImageWrapper.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+           
+            tempAnnotationPosition = { x, y };
+            showAnnotationForm(e.clientX, e.clientY);
+        });
+        
+        function showAnnotationForm(x, y) {
+           
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const formWidth = 250;
+            const formHeight = 200;
+            
+            let left = x + 10;
+            let top = y + 10;
+            
+            if (left + formWidth > viewportWidth) {
+                left = x - formWidth - 10;
+            }
+            
+            if (top + formHeight > viewportHeight) {
+                top = y - formHeight - 10;
+            }
+            
+            annotationForm.style.left = left + 'px';
+            annotationForm.style.top = top + 'px';
+            annotationForm.style.display = 'block';
+            
+           
+            annotationLabel.value = '';
+            annotationDescription.value = '';
+            annotationLabel.focus();
+        }
+        
+        function hideAnnotationForm() {
+            annotationForm.style.display = 'none';
+            tempAnnotationPosition = null;
+            activeAnnotationPoint = null;
+        }
+        
+        saveAnnotationBtn.addEventListener('click', function() {
+            const label = annotationLabel.value.trim();
+            const description = annotationDescription.value.trim();
+            
+            if (!label) {
+                alert('Please enter a label for the annotation');
+                return;
+            }
+            
+            if (tempAnnotationPosition) {
+               
+                const newAnnotation = {
+                    id: Date.now(),
+                    x: tempAnnotationPosition.x,
+                    y: tempAnnotationPosition.y,
+                    label: label,
+                    description: description
+                };
+                
+                currentAnnotations.push(newAnnotation);
+                renderAnnotation(newAnnotation);
+                
+               
+                firebase.database().ref(`projects/${projectId}`).update({
+                    annotations: currentAnnotations
+                });
+            }
+            
+            hideAnnotationForm();
+        });
+        
+        cancelAnnotationBtn.addEventListener('click', hideAnnotationForm);
+        
+        clearAnnotationsBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all annotations?')) {
+                currentAnnotations = [];
+                
+               
+                const points = transformedImageWrapper.querySelectorAll('.annotation-point');
+                points.forEach(point => point.remove());
+                
+               
+                const tooltips = document.querySelectorAll('.annotation-tooltip');
+                tooltips.forEach(tooltip => tooltip.remove());
+                
+               
+                firebase.database().ref(`projects/${projectId}`).update({
+                    annotations: null
+                });
+            }
+        });
+        
+        function loadAnnotations() {
+           
+            const points = transformedImageWrapper.querySelectorAll('.annotation-point');
+            points.forEach(point => point.remove());
+            
+           
+            const tooltips = document.querySelectorAll('.annotation-tooltip');
+            tooltips.forEach(tooltip => tooltip.remove());
+            
+           
+            if (currentProject && currentProject.annotations) {
+                currentAnnotations = currentProject.annotations;
+                currentAnnotations.forEach(renderAnnotation);
+            } else {
+                currentAnnotations = [];
+            }
+        }
+        
+        function renderAnnotation(annotation) {
+            const point = document.createElement('div');
+            point.className = 'annotation-point';
+            point.style.left = annotation.x + '%';
+            point.style.top = annotation.y + '%';
+            point.textContent = annotation.label.charAt(0).toUpperCase();
+            point.dataset.id = annotation.id;
+            
+            const tooltip = document.createElement('div');
+            tooltip.className = 'annotation-tooltip';
+            tooltip.innerHTML = `<strong>${annotation.label}</strong><p>${annotation.description || ''}</p>`;
+            tooltip.style.left = annotation.x + '%';
+            tooltip.style.top = (annotation.y - 5) + '%';
+            tooltip.dataset.id = annotation.id;
+            
+            transformedImageWrapper.appendChild(point);
+            transformedImageWrapper.appendChild(tooltip);
+            
+           
+            point.addEventListener('mouseenter', function() {
+                tooltip.style.display = 'block';
+            });
+            
+            point.addEventListener('mouseleave', function() {
+                tooltip.style.display = 'none';
+            });
+        }
+        
+       
+        function applyCustomization(customPrompt) {
+            customizationSpinner.style.display = 'block';
+            applyCustomizationBtn.disabled = true;
+            
+            let fullPrompt = `Transform this architectural design according to these instructions: ${customPrompt}`;
+            
+           
+            if (currentAnnotations && currentAnnotations.length > 0) {
+                fullPrompt += "\n\nThe image has the following annotations (parts that need attention):";
+                currentAnnotations.forEach(annotation => {
+                    fullPrompt += `\n- ${annotation.label}: ${annotation.description || 'No specific instructions'}`;
+                });
+            }
+            
+           
+            fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [
+                            { text: fullPrompt },
+                            {
+                                inline_data: {
+                                    mime_type: "image/jpeg",
+                                    data: currentProject.transformedImage
+                                }
+                            }
+                        ]
+                    }],
+                    generationConfig: { responseModalities: ["TEXT", "IMAGE"] }
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Customization Response:', data);
+                
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+                
+               
+                let generatedImageData = null;
+                
+               
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) {
+                   
+                    const imageParts = data.candidates[0].content.parts.filter(part => 
+                        part.inline_data || part.inlineData
+                    );
+                    
+                    if (imageParts.length > 0) {
+                       
+                        const imagePart = imageParts[0];
+                        if (imagePart.inline_data) {
+                            generatedImageData = imagePart.inline_data.data;
+                        } else if (imagePart.inlineData) {
+                            generatedImageData = imagePart.inlineData.data;
+                        }
+                    }
+                }
+                
+                if (!generatedImageData) {
+                    throw new Error('No image was found in the API response');
+                }
+                
+               
+                return firebase.database().ref(`projects/${projectId}`).update({
+                    transformedImage: generatedImageData,
+                    lastCustomization: customPrompt
+                });
+            })
+            .then(() => {
+               
+                loadProjectData(projectId);
+                
+               
+                customPrompt.value = '';
+                customizationSpinner.style.display = 'none';
+                applyCustomizationBtn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error applying customization:', error);
+                customizationSpinner.style.display = 'none';
+                applyCustomizationBtn.disabled = false;
+                alert('Error applying customization: ' + error.message);
+            });
+        }
+        
+       
+        profileBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownMenu.classList.remove('show');
+            
+           
+            const user = firebase.auth().currentUser;
+            if (user) {
+                profileName.textContent = user.displayName || 'User';
+                profileEmail.textContent = user.email;
+                
+                if (user.photoURL) {
+                    profilePicLarge.src = user.photoURL;
+                } else {
+                    const initials = user.displayName ? user.displayName.charAt(0) : 'U';
+                    profilePicLarge.src = `https://ui-avatars.com/api/?name=${initials}&background=4e6bff&color=fff&size=80`;
+                }
+                
+               
+                firebase.database().ref('projects')
+                    .orderByChild('userId')
+                    .equalTo(user.uid)
+                    .once('value', (snapshot) => {
+                        projectCount.textContent = snapshot.numChildren();
+                    });
+                
+               
+                const creationTime = new Date(user.metadata.creationTime);
+                memberSince.textContent = creationTime.getFullYear();
+            }
+            
+            profileModal.style.display = 'block';
+        });
+        
+        closeProfileModal.addEventListener('click', function() {
+            profileModal.style.display = 'none';
+        });
+        
+       
+        settingsBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownMenu.classList.remove('show');
+            settingsModal.style.display = 'block';
+        });
+        
+        closeSettingsModal.addEventListener('click', function() {
+            settingsModal.style.display = 'none';
+        });
+        
+       
+        renameBtn.addEventListener('click', function() {
+            newProjectName.value = currentProject.name;
+            renameModal.style.display = 'block';
+        });
+        
+        closeRenameModal.addEventListener('click', function() {
+            renameModal.style.display = 'none';
+        });
+        
+        cancelRenameBtn.addEventListener('click', function() {
+            renameModal.style.display = 'none';
+        });
+        
+        saveRenameBtn.addEventListener('click', function() {
+            const name = newProjectName.value.trim();
+            if (name) {
+                firebase.database().ref(`projects/${projectId}`).update({
+                    name: name
+                })
+                .then(() => {
+                    projectName.textContent = name;
+                    renameModal.style.display = 'none';
+                    alert('Project renamed successfully');
+                })
+                .catch(error => {
+                    console.error('Error renaming project:', error);
+                    alert('Failed to rename project');
+                });
+            } else {
+                alert('Please enter a valid project name');
+            }
+        });
+        
+       
+        window.addEventListener('click', function(event) {
+            if (event.target === profileModal) {
+                profileModal.style.display = 'none';
+            }
+            if (event.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+            if (event.target === renameModal) {
+                renameModal.style.display = 'none';
+            }
+        });
+        
+       
+        generate3DBtn.addEventListener('click', function() {
+            if (currentProject && currentProject.transformedImage) {
+                generate3DView();
+            } else {
+                alert('Transformed image is not available yet');
+            }
+        });
+
+       
+        const shareModal = document.getElementById('shareModal');
+        const closeShareModal = document.getElementById('closeShareModal');
+        const projectLink = document.getElementById('projectLink');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const shareToggle = document.getElementById('shareToggle');
+        
+       
+        shareBtn.addEventListener('click', function() {
+           
+            const baseUrl = window.location.origin + window.location.pathname;
+            const shareUrl = `${baseUrl}?id=${projectId}&share=true`;
+            
+           
+            projectLink.value = shareUrl;
+            
+           
+            shareToggle.checked = currentProject.shared || false;
+            
+           
+            shareModal.style.display = 'block';
+        });
+        
+       
+        closeShareModal.addEventListener('click', function() {
+            shareModal.style.display = 'none';
+        });
+        
+       
+        copyLinkBtn.addEventListener('click', function() {
+            projectLink.select();
+            document.execCommand('copy');
+            
+           
+            const originalText = copyLinkBtn.innerHTML;
+            copyLinkBtn.innerHTML = '<i class="fas fa-check"></i>';
+            setTimeout(() => {
+                copyLinkBtn.innerHTML = originalText;
+            }, 2000);
+        });
+        
+       
+        shareToggle.addEventListener('change', function() {
+            firebase.database().ref(`projects/${projectId}`).update({
+                shared: this.checked
+            })
+            .then(() => {
+                console.log('Project sharing status updated:', this.checked);
+            })
+            .catch(error => {
+                console.error('Error updating sharing status:', error);
+                alert('Failed to update sharing status');
+                this.checked = !this.checked;
+            });
+        });
+        
+       
+        window.addEventListener('click', function(event) {
+            if (event.target === shareModal) {
+                shareModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
